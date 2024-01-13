@@ -3,11 +3,14 @@ button{
     outline: none;
     border: none;
     border-radius: 5px;
-    width: 100%;
+    width: 80%;
     cursor: pointer;
     background-color: #7F5539;
     color: #ffffff;
     font-weight: 600;
     font-size: 1rem;
     max-width: 350px;
+
+    bottom: 10px;
+    position: absolute;
 }

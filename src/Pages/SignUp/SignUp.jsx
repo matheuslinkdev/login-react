@@ -2,72 +2,71 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import Button from "../../Components/Button/Button";
+import "./signup.css";
 
 const SignUp = () => {
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
-   const [email, setEmail] = useState("");
-   const [emailConf, setEmailConf] = useState("")
-   const [password, setPassword] = useState("");
-   const [error, setError] = useState("");
+  const { signup } = useAuth();
+  const navigate = useNavigate();
 
-     const { signup } = useAuth();
-     const navigate = useNavigate();
+  const handleSignUp = () => {
+    if (!email | !name | !password) {
+      setError("Fill all the fields.");
+      return;
+    }
 
-     const handleSignUp = ()=>{
-      if(!email | !emailConf | !password){
-        setError("Fill all the camps.")
-        return;
-      } else if( email !== emailConf){
-        setError("The emails aren't identic.")
-        return;
-      }
+    const res = signup(email, password);
 
-      const res = signup(email, password);
+    if (res) {
+      setError(res);
+      return;
+    }
 
-      if(res){
-        setError(res)
-        return;
-      }
-
-      alert("User succesfully registered")
-      navigate("/")
-     }
-
-
+    alert("User succesfully registered");
+    navigate("/");
+  };
 
   return (
     <article className="container">
-      <label>Welcome !</label>
-      <section className="content">
+      <span className="error-msg">{error}</span>
+      <section className="signup-content">
+        <h1>Welcome !</h1>
+
+        <label>UserName:</label>
+        <input
+          type="email"
+          placeholder="UserName"
+          value={name}
+          onChange={(e) => [setName(e.target.value), setError("")]}
+        />
+
+        <label>Email:</label>
         <input
           type="email"
           placeholder="Tip your email"
           value={email}
           onChange={(e) => [setEmail(e.target.value), setError("")]}
         />
-        <input
-          type="email"
-          placeholder="Confirm your email"
-          value={emailConf}
-          onChange={(e) => [setEmailConf(e.target.value), setError("")]}
-        />
+
+        <label>Password:</label>
         <input
           type="password"
           placeholder="Tip your password"
           value={password}
           onChange={(e) => [setPassword(e.target.value), setError("")]}
         />
-        <span className="error-msg">{error}</span>
-        <Button Text="SignUp!" onClick={handleSignUp}></Button>
 
-        <div className="signup">
-          Already have a account? 
-          <span>
-            <Link to="/signin" className="strong">
-              Login !
-            </Link>
-          </span>
+        <div className="sign">
+          <span className="account-ask">Already have a account? </span>
+          <Link to="/signin" className="strong">
+            Login !
+          </Link>
         </div>
+        <Button Text="SignUp!" onClick={handleSignUp}></Button>
       </section>
     </article>
   );

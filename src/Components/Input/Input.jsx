@@ -1,5 +1,3 @@
-import "./input.css";
-
 const Input = ({ type, placeholder, value, onChange }) => {
   return (
     <section>

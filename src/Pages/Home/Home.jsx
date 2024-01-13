@@ -9,7 +9,7 @@ const Home = () => {
   return (
     <main className="container">
       <h2 className="title">Home</h2>
-      <Button Text="SignOut" onClick={()=>[signout(), navigate("/")]}/>
+      <Button Text="SignOut" onClick={() => [signout(), navigate("/")]} />
     </main>
   );
 };

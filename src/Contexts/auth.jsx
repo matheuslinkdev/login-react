@@ -1,76 +1,73 @@
 import { createContext, useEffect, useState } from "react";
 
-export const AuthContext  = createContext({});
+export const AuthContext = createContext({});
 
-export const AuthProvider =({children}) =>{
+export const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState();
 
-    const [user, setUser] = useState()
+  useEffect(() => {
+    const userToken = localStorage.getItem("user_token");
+    const usersStorage = localStorage.getItem("users_db");
 
-    useEffect(()=>{
-        const userToken = localStorage.getItem("user_token");
-        const usersStorage = localStorage.getItem("users_db");
+    if (userToken && usersStorage) {
+      const hasUser = JSON.parse(usersStorage)?.filter(
+        (user) => (user.email = JSON.parse(userToken).email)
+      );
 
-        if (userToken && usersStorage){
-            const hasUser = JSON.parse(usersStorage)?.filter(
-                (user) => user.email = JSON.parse(userToken).email
-            );
+      if (hasUser) setUser(hasUser[0]);
+    }
+  }, []);
 
-            if (hasUser) setUser(hasUser[0])
-        }
-    }, []);
+  const signin = (email, password) => {
+    const usersStorage = JSON.parse(localStorage.getItem("users_db"));
 
+    const hasUser = usersStorage?.filter((user) => user.email === email);
 
-    const signin = (email, password)=>{
-        const usersStorage = JSON.parse(localStorage.getItem("users_db"));
+    if (hasUser?.length) {
+      if (hasUser[0].email === email && hasUser[0].password === password) {
+        const token = Math.random().toString(36).substring(2);
+        localStorage.setItem("user_token", JSON.stringify({ email, token }));
+        setUser({ email, password });
+        return;
+      } else {
+        return "Incorrect Email or Password !";
+      }
+    } else {
+      return "User not found !";
+    }
+  };
 
-        const hasUser = usersStorage?.filter((user)=> user.email === email);
+  const signup = (email, password) => {
+    const usersStorage = JSON.parse(localStorage.getItem("users_db"));
 
-        if(hasUser?.length){
-            if(hasUser[0].email === email && hasUser[0].password === password){
-                const token = Math.random().toString(36).substring(2);
-                localStorage.setItem("user_token", JSON.stringify({email, token}))
-                setUser({email, password});
-                return;
-            } else{
-                return "Email ou senha incorretos !"
-            }
-        }
-            else{
-                return "Usuário não cadastrado !"
-        }
-    };
+    const hasUser = usersStorage?.filter((user) => user.email === email);
 
-    const signup = (email, password) => {
-              const usersStorage = JSON.parse(localStorage.getItem("users_db"));
+    if (hasUser?.length) {
+      return "A account already exists in this email !";
+    }
 
-              const hasUser = usersStorage?.filter(
-                (user) => user.email === email
-              );
+    let newUser;
 
-              if(hasUser?.length){
-                return "Já existe uma conta nesse Email !"
-              }
+    if (usersStorage) {
+      newUser = [...usersStorage, { email, password }];
+    } else {
+      newUser = [{ email, password }];
+    }
 
-              let newUser;
+    localStorage.setItem("users_db", JSON.stringify(newUser));
+    return;
+  };
 
-              if(usersStorage){
-                newUser = [...usersStorage, {email, password}]
-              } else{
-                newUser = [{email, password}]
-              }
+  const signout = () => {
+    setUser(null);
+    localStorage.removeItem("user_token");
+  };
 
-              localStorage.setItem("users_db", JSON.stringify(newUser))
-              return;
-    };
-
-    const signout = ()=>{
-        setUser(null);
-        localStorage.removeItem("user_token")
-    };
-
-    return (
+  return (
     <AuthContext.Provider
-    value={{user, signed: ! !user, signin, signup, signout}}>
-        {children}
-    </AuthContext.Provider>)
-}
+      value={{ user, signed: !!user, signin, signup, signout }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
+};

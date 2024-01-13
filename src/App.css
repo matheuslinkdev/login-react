@@ -4,3 +4,66 @@
   box-sizing: border-box;
   font-family: 'Nunito Sans', sans-serif;
 }
+
+body{
+  background-color: #F2CC8F;
+}
+
+h1{
+  font-size: 1.8rem;
+  text-decoration: underline;
+  color: #9C6644;
+  position: absolute;
+  top: 20px;
+}
+
+.error-msg{
+  color: red;
+  font-size: 1.6rem;
+  position: absolute;
+  top: 20px;
+}
+
+.container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100dvh;
+  text-align: justify;
+}
+
+input{
+  width: 80%;
+  margin: 2vh auto;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  border-bottom: 2px solid #7F5539;
+  text-align: center;
+  font-size: 1.1rem;
+}
+
+label{
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-align: justify;
+  color: #9C6644;
+  margin-bottom: -10px;
+}
+
+.sign{
+ position: absolute;
+ bottom: 70px;
+}
+
+.account-ask{
+   color: #B08968;
+}
+
+.strong{
+    cursor: pointer;
+    color: #126599;
+    text-decoration: underline;
+    font-weight: 600;
+}
