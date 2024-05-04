@@ -1,16 +1,16 @@
-button{
+.button{
     padding: 16px 20px;
     outline: none;
     border: none;
     border-radius: 5px;
     width: 80%;
     cursor: pointer;
-    background-color: #7F5539;
     color: #ffffff;
+    background-color: #7F5539;
     font-weight: 600;
     font-size: 1rem;
     max-width: 350px;
-
-    bottom: 10px;
+    margin: auto;
     position: absolute;
+    bottom: 10px;
 }

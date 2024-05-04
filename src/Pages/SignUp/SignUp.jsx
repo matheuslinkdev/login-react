@@ -66,7 +66,11 @@ const SignUp = () => {
             Login !
           </Link>
         </div>
-        <Button Text="SignUp!" onClick={handleSignUp}></Button>
+        <Button
+          Text="SignUp!"
+          onClick={handleSignUp}
+          bgColor="#7F5539"
+        />
       </section>
     </article>
   );

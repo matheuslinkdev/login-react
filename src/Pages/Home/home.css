@@ -5,4 +5,5 @@
     flex-direction: column;
     height: 100dvh;
     gap: 20px;
+    max-width: 95dvw;
 }
